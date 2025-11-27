@@ -7,7 +7,7 @@
     <meta name="keywords" content="Directing, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Directing | Template</title>
+    <title>La Comunità | People Directory</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -24,6 +24,67 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+        <!-- Netlify Identity -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <script>
+        // CODICE AZIENDALE PER LA REGISTRAZIONE (DA CAMBIARE)
+        const COMPANY_REGISTRATION_CODE = "LACOMUNITA2025";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.netlifyIdentity) {
+                netlifyIdentity.on("login", function (user) {
+                    // dopo il login manda alla pagina dei profili
+                    window.location.href = "listing.html";
+                });
+
+                netlifyIdentity.on("logout", function () {
+                    // dopo il logout torna alla home pubblica
+                    window.location.href = "index.html";
+                });
+
+                netlifyIdentity.init();
+            }
+        });
+
+        // apre il widget in modalità LOGIN
+        function openLogin() {
+            if (window.netlifyIdentity) {
+                netlifyIdentity.open("login");
+            }
+        }
+
+        // step extra: chiede il codice aziendale prima della REGISTRAZIONE
+        function openRegistrationStep() {
+            const code = prompt("Inserisci il codice aziendale per registrarti:");
+            if (code === null) return;
+
+            if (code === COMPANY_REGISTRATION_CODE) {
+                if (window.netlifyIdentity) {
+                    netlifyIdentity.open("signup");
+                }
+            } else {
+                alert("Codice aziendale non corretto. Non puoi registrarti.");
+            }
+        }
+
+        // comportamento del bottone Add Profile
+        function handleAddListingClick(e) {
+            e.preventDefault();
+            if (!window.netlifyIdentity) return;
+
+            const user = netlifyIdentity.currentUser();
+
+            if (user) {
+                // utente già loggato → pagina di creazione profilo
+                window.location.href = "add-profile.html";
+            } else {
+                // utente non loggato → passa prima dal codice aziendale + registrazione
+                openRegistrationStep();
+            }
+        }
+    </script>
+
 </head>
 
 <body>
@@ -61,9 +122,13 @@
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="#" class="primary-btn"><i class="fa fa-plus"></i>Add Listing</a>
-                            <a href="#" class="login-btn"><i class="fa fa-user"></i></a>
-                        </div>
+    <a href="#" class="primary-btn" onclick="handleAddListingClick(event)">
+        <i class="fa fa-plus"></i>Add Profile
+    </a>
+    <a href="javascript:void(0)" class="login-btn" onclick="openLogin()">
+        <i class="fa fa-user"></i>
+    </a>
+</div>
                     </div>
                 </div>
             </div>
@@ -79,33 +144,34 @@
                 <div class="col-lg-12">
                     <div class="hero__text">
                         <div class="section-title">
-                            <h2>Discover The Best Services Near You</h2>
-                            <p>1.118.940.376 The best service package is waiting for you</p>
-                        </div>
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <input type="text" placeholder="Search...">
-                                <div class="select__option">
-                                    <select>
-                                        <option value="">Choose Categories</option>
-                                    </select>
-                                </div>
-                                <div class="select__option">
-                                    <select>
-                                        <option value="">Choose Location</option>
-                                    </select>
-                                </div>
-                                <button type="submit">Explore Now</button>
-                            </form>
-                        </div>
-                        <ul class="hero__categories__tags">
-                            <li><a href="#"><img src="img/hero/cat-1.png" alt=""> Restaurent</a></li>
-                            <li><a href="#"><img src="img/hero/cat-2.png" alt=""> Food & Drink</a></li>
-                            <li><a href="#"><img src="img/hero/cat-3.png" alt=""> Shopping</a></li>
-                            <li><a href="#"><img src="img/hero/cat-4.png" alt=""> Beauty</a></li>
-                            <li><a href="#"><img src="img/hero/cat-5.png" alt=""> Hotels</a></li>
-                            <li><a href="#"><img src="img/hero/cat-6.png" alt=""> All Categories</a></li>
-                        </ul>
+    <h2>Discover colleagues, skills and interests</h2>
+    <p>The internal community of colleagues is waiting for you.</p>
+</div>
+<div class="hero__search__form">
+    <form action="#">
+        <input type="text" placeholder="Search people, skills, interests...">
+        <div class="select__option">
+            <select>
+                <option value="">Choose skill area</option>
+            </select>
+        </div>
+        <div class="select__option">
+            <select>
+                <option value="">Choose department or location</option>
+            </select>
+        </div>
+        <button type="submit">Explore Now</button>
+    </form>
+</div>
+<ul class="hero__categories__tags">
+    <li><a href="#"><img src="img/hero/cat-1.png" alt=""> Design & Creativity</a></li>
+    <li><a href="#"><img src="img/hero/cat-2.png" alt=""> Product & Marketing</a></li>
+    <li><a href="#"><img src="img/hero/cat-3.png" alt=""> Tech & Engineering</a></li>
+    <li><a href="#"><img src="img/hero/cat-4.png" alt=""> HR & People</a></li>
+    <li><a href="#"><img src="img/hero/cat-5.png" alt=""> Business & Operations</a></li>
+    <li><a href="#"><img src="img/hero/cat-6.png" alt=""> All skills & interests</a></li>
+</ul>
+
                     </div>
                 </div>
             </div>
