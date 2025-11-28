@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="it">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="La Comunità - People Directory">
-    <meta name="keywords" content="community, people, skills, interests, directory">
+    <meta name="description" content="La Comunità - Directory Persone">
+    <meta name="keywords" content="community, people, skills, interests, azienda">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>La Comunità | People</title>
+
+    <title>La Comunità | Persone</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -31,14 +32,12 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             if (!window.netlifyIdentity) {
-                // se Identity non è disponibile → torna al login
                 window.location.href = "index.html";
                 return;
             }
 
             netlifyIdentity.on("init", function (user) {
                 if (!user) {
-                    // non loggato → pagina di login
                     window.location.href = "index.html";
                 }
             });
@@ -51,88 +50,95 @@
         });
 
         function logout() {
-            if (window.netlifyIdentity) {
-                netlifyIdentity.logout();
-            }
+            if (window.netlifyIdentity) netlifyIdentity.logout();
         }
     </script>
+
 </head>
 
 <body class="ov-hid">
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
 
-    <!-- Header Section Begin -->
+    <div id="preloder"><div class="loader"></div></div>
+
+    <!-- Header -->
     <header class="header header--normal">
         <div class="container-fluid">
             <div class="row">
+
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <!-- dopo login la "home" vera è home.html -->
-                        <a href="./home.html"><img src="img/footer-logo.png" alt="La Comunità"></a>
+                        <a href="./home.html"><img src="img/footer-logo.png" alt=""></a>
                     </div>
                 </div>
+
                 <div class="col-lg-9 col-md-9">
                     <div class="header__nav">
+
                         <nav class="header__menu mobile-menu">
                             <ul>
                                 <li><a href="./home.html">Home</a></li>
-                                <li class="active"><a href="./listing.html">People</a></li>
-                                <li><a href="./add-profile.html">Add Profile</a></li>
+                                <li class="active"><a href="./listing.html">Persone</a></li>
+                                <li><a href="./add-profile.html">Aggiungi profilo</a></li>
                             </ul>
                         </nav>
+
                         <div class="header__menu__right">
-                            <!-- Logout -->
                             <a href="#" class="primary-btn" onclick="logout()">
                                 <i class="fa fa-sign-out"></i> Logout
                             </a>
                         </div>
+
                     </div>
                 </div>
+
             </div>
+
             <div id="mobile-menu-wrap"></div>
         </div>
     </header>
-    <!-- Header Section End -->
+    <!-- Fine Header -->
 
-    <!-- Filter Begin -->
+
+    <!-- FILTRI A SINISTRA -->
     <div class="filter nice-scroll">
+
         <div class="filter__title">
-            <h5><i class="fa fa-filter"></i> Filter people</h5>
+            <h5><i class="fa fa-filter"></i> Filtra persone</h5>
         </div>
+
+        <!-- Nome -->
         <div class="filter__search">
-            <input type="text" placeholder="Name or skill">
+            <input type="text" placeholder="Nome o parola chiave">
         </div>
+
+        <!-- Skill: multiselect -->
         <div class="filter__select">
-            <select>
-                <option value="">All departments / teams</option>
+            <label for="skill-select" class="filter__label">Skill (selezione multipla)</label>
+            <select id="skill-select" multiple>
+                <option value="product">Product management</option>
+                <option value="ux">UX / UI design</option>
+                <option value="marketing">Marketing & comunicazione</option>
+                <option value="development">Sviluppo software</option>
+                <option value="hr">HR & people</option>
+                <option value="operations">Operations</option>
             </select>
         </div>
-        <div class="filter__location">
-            <input type="text" placeholder="Location (es. Milano, Roma, Remote)">
-            <i class="fa fa-map-marker"></i>
+
+        <!-- Ruolo -->
+        <div class="filter__select">
+            <label for="role-select" class="filter__label">Ruolo</label>
+            <select id="role-select">
+                <option value="">Tutti i ruoli</option>
+                <option value="junior">Junior</option>
+                <option value="middle">Middle</option>
+                <option value="senior">Senior</option>
+                <option value="lead">Lead / Manager</option>
+            </select>
         </div>
 
-        <!-- Sezioni radius/price/tags rimangono, ma puoi toglierle in seguito se non servono -->
+        <!-- Anni in azienda -->
         <div class="filter__radius">
-            <p>Seniority (placeholder):</p>
-            <div class="price-range-wrap">
-                <div
-                    class="price-range-radius ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
-                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                </div>
-                <div class="range-slider">
-                    <div class="price-input">
-                        <input type="text" id="radius">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="filter__price">
-            <p>Years of experience (placeholder):</p>
+            <p>Anni in azienda:</p>
             <div class="price-range-wrap">
                 <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
                     <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
@@ -140,242 +146,182 @@
                 </div>
                 <div class="range-slider">
                     <div class="price-input">
-                        <input type="text" id="minamount">
-                        <input type="text" id="maxamount" value="10+">
+                        <input type="text" id="anni-azienda" placeholder="0 - 10+">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="filter__tags">
-            <h6>Tags (placeholder)</h6>
-            <label for="leadership">
-                Leadership
-                <input type="checkbox" id="leadership">
-                <span class="checkmark"></span>
-            </label>
-            <label for="facilitation">
-                Facilitation
-                <input type="checkbox" id="facilitation">
-                <span class="checkmark"></span>
-            </label>
-            <label for="mentoring">
-                Mentoring
-                <input type="checkbox" id="mentoring">
-                <span class="checkmark"></span>
-            </label>
-            <label for="community">
-                Community
-                <input type="checkbox" id="community">
-                <span class="checkmark"></span>
-            </label>
-        </div>
-        <div class="filter__btns">
-            <button type="submit">Filter Results</button>
-            <button type="submit" class="filter__reset">Reset All</button>
-        </div>
-    </div>
-    <!-- Filter End -->
 
-    <!-- Listing Section Begin -->
+        <!-- Bottoni -->
+        <div class="filter__btns">
+            <button type="submit">Filtra risultati</button>
+            <button type="reset" class="filter__reset">Resetta filtri</button>
+        </div>
+
+    </div>
+    <!-- FINE FILTRI -->
+
+
+    <!-- LISTA PROFILI (CENTRALE) -->
     <section class="listing nice-scroll">
+
         <div class="listing__text__top">
             <div class="listing__text__top__left">
-                <h5>People</h5>
-                <span>6 Profiles Found</span>
+                <h5>Persone</h5>
+                <span>6 profili trovati</span>
             </div>
-            <div class="listing__text__top__right">Sort by team <i class="fa fa-sort-amount-asc"></i></div>
+            <div class="listing__text__top__right">Ordina per team <i class="fa fa-sort-amount-asc"></i></div>
         </div>
+
         <div class="listing__list">
+
+
             <!-- PROFILO 1 -->
             <div class="listing__item">
                 <div class="listing__item__pic set-bg" data-setbg="img/profiles/marco-rossi.jpg">
                     <div class="listing__item__pic__tag">Product</div>
-                    <div class="listing__item__pic__btns">
-                        <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                    </div>
                 </div>
+
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
+
                         <h5>Marco Rossi</h5>
+
                         <span class="listing__item__tag">
                             Digital Product Manager · Milano · Digital Team
                         </span>
+
                         <ul>
-                            <li><strong>Skills:</strong> Product management, UX, Agile, Roadmapping</li>
-                            <li><strong>Interests:</strong> Innovazione, formazione interna, community</li>
-                            <li><strong>Contact:</strong> marco.rossi@azienda.it</li>
+                            <li><strong>Competenze:</strong> Product management, UX, Agile</li>
+                            <li><strong>Interessi:</strong> Innovazione, formazione, community</li>
+                            <li><strong>Contatto:</strong> marco.rossi@azienda.it</li>
                         </ul>
+
                     </div>
+
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
-                            <img src="img/listing/list_small_icon-1.png" alt="">
                             <span>Product & Innovation</span>
                         </div>
-                        <div class="listing__item__text__info__right">Open to collaboration</div>
+                        <div class="listing__item__text__info__right">Disponibile a collaborare</div>
                     </div>
                 </div>
             </div>
+
 
             <!-- PROFILO 2 -->
             <div class="listing__item">
+
                 <div class="listing__item__pic set-bg" data-setbg="img/profiles/giulia-bianchi.jpg">
-                    <div class="listing__item__pic__tag top_rate">Design</div>
-                    <div class="listing__item__pic__btns">
-                        <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                    </div>
+                    <div class="listing__item__pic__tag" style="background:#29a6ff;">Design</div>
                 </div>
+
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
+
                         <h5>Giulia Bianchi</h5>
+
                         <span class="listing__item__tag">
                             UX Designer · Roma · Experience Team
                         </span>
+
                         <ul>
-                            <li><strong>Skills:</strong> UX research, wireframing, prototyping, usability testing</li>
-                            <li><strong>Interests:</strong> Service design, accessibility, facilitation</li>
-                            <li><strong>Contact:</strong> giulia.bianchi@azienda.it</li>
+                            <li><strong>Competenze:</strong> UX research, prototipazione, usability test</li>
+                            <li><strong>Interessi:</strong> Accessibilità, service design</li>
+                            <li><strong>Contatto:</strong> giulia.bianchi@azienda.it</li>
                         </ul>
+
                     </div>
+
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
-                            <img src="img/listing/list_small_icon-2.png" alt="">
                             <span>Design & Experience</span>
                         </div>
-                        <div class="listing__item__text__info__right">Open to collaboration</div>
+                        <div class="listing__item__text__info__right">Disponibile a collaborare</div>
                     </div>
                 </div>
             </div>
 
+
             <!-- PROFILO 3 -->
             <div class="listing__item">
+
                 <div class="listing__item__pic set-bg" data-setbg="img/profiles/luca-verdi.jpg">
                     <div class="listing__item__pic__tag">HR</div>
-                    <div class="listing__item__pic__btns">
-                        <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                    </div>
                 </div>
+
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
+
                         <h5>Luca Verdi</h5>
+
                         <span class="listing__item__tag">
                             HR Business Partner · Remote · HR & People
                         </span>
+
                         <ul>
-                            <li><strong>Skills:</strong> People management, coaching, change management</li>
-                            <li><strong>Interests:</strong> Community, wellbeing, diversity & inclusion</li>
-                            <li><strong>Contact:</strong> luca.verdi@azienda.it</li>
+                            <li><strong>Competenze:</strong> People management, coaching</li>
+                            <li><strong>Interessi:</strong> Wellbeing, diversity & inclusion</li>
+                            <li><strong>Contatto:</strong> luca.verdi@azienda.it</li>
                         </ul>
+
                     </div>
+
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
-                            <img src="img/listing/list_small_icon-3.png" alt="">
                             <span>HR & People</span>
                         </div>
-                        <div class="listing__item__text__info__right">Open to mentoring</div>
+                        <div class="listing__item__text__info__right">Disponibile per mentoring</div>
                     </div>
+
                 </div>
             </div>
+
 
             <!-- PROFILO 4 -->
             <div class="listing__item">
                 <div class="listing__item__pic set-bg" data-setbg="img/profiles/sara-neri.jpg">
                     <div class="listing__item__pic__tag">Marketing</div>
-                    <div class="listing__item__pic__btns">
-                        <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                    </div>
                 </div>
+
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
+
                         <h5>Sara Neri</h5>
+
                         <span class="listing__item__tag">
                             Marketing Lead · Torino · Brand & Communication
                         </span>
+
                         <ul>
-                            <li><strong>Skills:</strong> Campaign planning, content strategy, analytics</li>
-                            <li><strong>Interests:</strong> Storytelling, branding, internal comms</li>
-                            <li><strong>Contact:</strong> sara.neri@azienda.it</li>
+                            <li><strong>Competenze:</strong> Strategia, contenuti, analytics</li>
+                            <li><strong>Interessi:</strong> Storytelling, comms interne</li>
+                            <li><strong>Contatto:</strong> sara.neri@azienda.it</li>
                         </ul>
+
                     </div>
+
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
-                            <img src="img/listing/list_small_icon-4.png" alt="">
-                            <span>Marketing & Comms</span>
+                            <span>Marketing & Communication</span>
                         </div>
-                        <div class="listing__item__text__info__right">Open to projects</div>
+                        <div class="listing__item__text__info__right">Disponibile a collaborare</div>
                     </div>
+
                 </div>
             </div>
 
-            <!-- PROFILO 5 -->
-            <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="img/profiles/alessandro-russo.jpg">
-                    <div class="listing__item__pic__tag">Tech</div>
-                    <div class="listing__item__pic__btns">
-                        <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                    </div>
-                </div>
-                <div class="listing__item__text">
-                    <div class="listing__item__text__inside">
-                        <h5>Alessandro Russo</h5>
-                        <span class="listing__item__tag">
-                            Software Engineer · Milano · Tech Team
-                        </span>
-                        <ul>
-                            <li><strong>Skills:</strong> Backend development, APIs, DevOps</li>
-                            <li><strong>Interests:</strong> Automation, open source, developer experience</li>
-                            <li><strong>Contact:</strong> alessandro.russo@azienda.it</li>
-                        </ul>
-                    </div>
-                    <div class="listing__item__text__info">
-                        <div class="listing__item__text__info__left">
-                            <img src="img/listing/list_small_icon-3.png" alt="">
-                            <span>Tech & Engineering</span>
-                        </div>
-                        <div class="listing__item__text__info__right">Open to pair programming</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PROFILO 6 -->
-            <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="img/profiles/elena-moretti.jpg">
-                    <div class="listing__item__pic__tag">Operations</div>
-                    <div class="listing__item__pic__btns">
-                        <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                    </div>
-                </div>
-                <div class="listing__item__text">
-                    <div class="listing__item__text__inside">
-                        <h5>Elena Moretti</h5>
-                        <span class="listing__item__tag">
-                            Operations Manager · Bologna · Operations
-                        </span>
-                        <ul>
-                            <li><strong>Skills:</strong> Process design, stakeholder management, planning</li>
-                            <li><strong>Interests:</strong> Continuous improvement, service excellence</li>
-                            <li><strong>Contact:</strong> elena.moretti@azienda.it</li>
-                        </ul>
-                    </div>
-                    <div class="listing__item__text__info">
-                        <div class="listing__item__text__info__left">
-                            <img src="img/listing/list_small_icon-5.png" alt="">
-                            <span>Business & Operations</span>
-                        </div>
-                        <div class="listing__item__text__info__right">Open to sharing best practices</div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </section>
-    <!-- Listing Section End -->
 
-    <!-- Map Begin (puoi cambiarla in mappa sedi aziendali in futuro) -->
-    <div class="listing__map">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d-118.69192431097179!3d34.020730495817475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1586670019340!5m2!1sen!2sbd"
-            style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+    </section>
+    <!-- FINE LISTA -->
+
+
+    <!-- Footer -->
+    <div class="footer__bottom">
+        <p style="text-align:center; padding:20px;">© La Comunità</p>
     </div>
-    <!-- Map End -->
+
 
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
@@ -388,6 +334,7 @@
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+
 </body>
 
 </html>
