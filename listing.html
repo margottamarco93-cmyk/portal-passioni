@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Directing Template">
-    <meta name="keywords" content="Directing, unica, creative, html">
+    <meta name="description" content="La Comunità - People Directory">
+    <meta name="keywords" content="community, people, skills, interests, directory">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Directing | Template</title>
+    <title>La Comunità | People</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -24,6 +24,38 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <!-- Netlify Identity -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!window.netlifyIdentity) {
+                // se Identity non è disponibile → torna al login
+                window.location.href = "index.html";
+                return;
+            }
+
+            netlifyIdentity.on("init", function (user) {
+                if (!user) {
+                    // non loggato → pagina di login
+                    window.location.href = "index.html";
+                }
+            });
+
+            netlifyIdentity.on("logout", function () {
+                window.location.href = "index.html";
+            });
+
+            netlifyIdentity.init();
+        });
+
+        function logout() {
+            if (window.netlifyIdentity) {
+                netlifyIdentity.logout();
+            }
+        }
+    </script>
 </head>
 
 <body class="ov-hid">
@@ -38,31 +70,24 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="img/footer-logo.png" alt=""></a>
+                        <!-- dopo login la "home" vera è home.html -->
+                        <a href="./home.html"><img src="img/footer-logo.png" alt="La Comunità"></a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9">
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li><a href="./index.html">Home</a></li>
-                                <li class="active"><a href="./listing.html">Listing</a></li>
-                                <li><a href="#">Categories</a></li>
-                                <li><a href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="./about.html">About</a></li>
-                                        <li><a href="./listing-details.html">Listing Details</a></li>
-                                        <li><a href="./blog-details.html">Blog Details</a></li>
-                                        <li><a href="./contact.html">Contact</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="./blog.html">Blog</a></li>
-                                <li><a href="#">Shop</a></li>
+                                <li><a href="./home.html">Home</a></li>
+                                <li class="active"><a href="./listing.html">People</a></li>
+                                <li><a href="./add-profile.html">Add Profile</a></li>
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="#" class="primary-btn"><i class="fa fa-plus"></i>Add Listing</a>
-                            <a href="#" class="login-btn"><i class="fa fa-user"></i></a>
+                            <!-- Logout -->
+                            <a href="#" class="primary-btn" onclick="logout()">
+                                <i class="fa fa-sign-out"></i> Logout
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -75,22 +100,24 @@
     <!-- Filter Begin -->
     <div class="filter nice-scroll">
         <div class="filter__title">
-            <h5><i class="fa fa-filter"></i> Filter</h5>
+            <h5><i class="fa fa-filter"></i> Filter people</h5>
         </div>
         <div class="filter__search">
-            <input type="text">
+            <input type="text" placeholder="Name or skill">
         </div>
         <div class="filter__select">
             <select>
-                <option value="">All Categories</option>
+                <option value="">All departments / teams</option>
             </select>
         </div>
         <div class="filter__location">
-            <input type="text" placeholder="Location">
+            <input type="text" placeholder="Location (es. Milano, Roma, Remote)">
             <i class="fa fa-map-marker"></i>
         </div>
+
+        <!-- Sezioni radius/price/tags rimangono, ma puoi toglierle in seguito se non servono -->
         <div class="filter__radius">
-            <p>Radius:</p>
+            <p>Seniority (placeholder):</p>
             <div class="price-range-wrap">
                 <div
                     class="price-range-radius ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
@@ -105,7 +132,7 @@
             </div>
         </div>
         <div class="filter__price">
-            <p>Price:</p>
+            <p>Years of experience (placeholder):</p>
             <div class="price-range-wrap">
                 <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
                     <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
@@ -114,46 +141,31 @@
                 <div class="range-slider">
                     <div class="price-input">
                         <input type="text" id="minamount">
-                        <input type="text" id="maxamount" value="$80">
+                        <input type="text" id="maxamount" value="10+">
                     </div>
                 </div>
             </div>
         </div>
         <div class="filter__tags">
-            <h6>Tag</h6>
-            <label for="coupon">
-                Coupons
-                <input type="checkbox" id="coupon">
+            <h6>Tags (placeholder)</h6>
+            <label for="leadership">
+                Leadership
+                <input type="checkbox" id="leadership">
                 <span class="checkmark"></span>
             </label>
-            <label for="sa">
-                Smoking Allowed
-                <input type="checkbox" id="sa">
+            <label for="facilitation">
+                Facilitation
+                <input type="checkbox" id="facilitation">
                 <span class="checkmark"></span>
             </label>
-            <label for="camping">
-                Camping
-                <input type="checkbox" id="camping">
+            <label for="mentoring">
+                Mentoring
+                <input type="checkbox" id="mentoring">
                 <span class="checkmark"></span>
             </label>
-            <label for="hot-spots">
-                Hot Spots
-                <input type="checkbox" id="hot-spots">
-                <span class="checkmark"></span>
-            </label>
-            <label for="internet">
-                Internet
-                <input type="checkbox" id="internet">
-                <span class="checkmark"></span>
-            </label>
-            <label for="tr">
-                Top Rated
-                <input type="checkbox" id="tr">
-                <span class="checkmark"></span>
-            </label>
-            <label for="hd">
-                Hot Deal
-                <input type="checkbox" id="hd">
+            <label for="community">
+                Community
+                <input type="checkbox" id="community">
                 <span class="checkmark"></span>
             </label>
         </div>
@@ -168,231 +180,188 @@
     <section class="listing nice-scroll">
         <div class="listing__text__top">
             <div class="listing__text__top__left">
-                <h5>Restaurants</h5>
-                <span>18 Results Found</span>
+                <h5>People</h5>
+                <span>6 Profiles Found</span>
             </div>
-            <div class="listing__text__top__right">Nearby <i class="fa fa-sort-amount-asc"></i></div>
+            <div class="listing__text__top__right">Sort by team <i class="fa fa-sort-amount-asc"></i></div>
         </div>
         <div class="listing__list">
+            <!-- PROFILO 1 -->
             <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
-                    <img src="img/listing/list_icon-1.png" alt="">
-                    <div class="listing__item__pic__tag">Popular</div>
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/marco-rossi.jpg">
+                    <div class="listing__item__pic__tag">Product</div>
                     <div class="listing__item__pic__btns">
                         <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                        <a href="#"><span class="icon_heart_alt"></span></a>
                     </div>
                 </div>
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
-                        <h5>Chinese Sausage Restaurant</h5>
-                        <div class="listing__item__text__rating">
-                            <div class="listing__item__rating__star">
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star-half_alt"></span>
-                            </div>
-                            <h6>$40 - $70</h6>
-                        </div>
+                        <h5>Marco Rossi</h5>
+                        <span class="listing__item__tag">
+                            Digital Product Manager · Milano · Digital Team
+                        </span>
                         <ul>
-                            <li><span class="icon_pin_alt"></span> 236 Littleton St. New Philadelphia, Ohio, United
-                                States</li>
-                            <li><span class="icon_phone"></span> (+12) 345-678-910</li>
+                            <li><strong>Skills:</strong> Product management, UX, Agile, Roadmapping</li>
+                            <li><strong>Interests:</strong> Innovazione, formazione interna, community</li>
+                            <li><strong>Contact:</strong> marco.rossi@azienda.it</li>
                         </ul>
                     </div>
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
                             <img src="img/listing/list_small_icon-1.png" alt="">
-                            <span>Restaurant</span>
+                            <span>Product & Innovation</span>
                         </div>
-                        <div class="listing__item__text__info__right">Open Now</div>
+                        <div class="listing__item__text__info__right">Open to collaboration</div>
                     </div>
                 </div>
             </div>
+
+            <!-- PROFILO 2 -->
             <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-2.jpg">
-                    <img src="img/listing/list_icon-2.png" alt="">
-                    <div class="listing__item__pic__tag top_rate">Top Rate</div>
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/giulia-bianchi.jpg">
+                    <div class="listing__item__pic__tag top_rate">Design</div>
                     <div class="listing__item__pic__btns">
                         <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                        <a href="#"><span class="icon_heart_alt"></span></a>
                     </div>
                 </div>
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
-                        <h5>Shrimp floured and fried</h5>
-                        <div class="listing__item__text__rating">
-                            <div class="listing__item__rating__star">
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star-half_alt"></span>
-                            </div>
-                            <h6>$40 - $70</h6>
-                        </div>
+                        <h5>Giulia Bianchi</h5>
+                        <span class="listing__item__tag">
+                            UX Designer · Roma · Experience Team
+                        </span>
                         <ul>
-                            <li><span class="icon_pin_alt"></span> 1012 Vesper Dr. Columbus, Georgia(GA), United States
-                            </li>
-                            <li><span class="icon_phone"></span> (+12) 345-678-910</li>
+                            <li><strong>Skills:</strong> UX research, wireframing, prototyping, usability testing</li>
+                            <li><strong>Interests:</strong> Service design, accessibility, facilitation</li>
+                            <li><strong>Contact:</strong> giulia.bianchi@azienda.it</li>
                         </ul>
                     </div>
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
                             <img src="img/listing/list_small_icon-2.png" alt="">
-                            <span>Food & Drink</span>
+                            <span>Design & Experience</span>
                         </div>
-                        <div class="listing__item__text__info__right closed">Closed</div>
+                        <div class="listing__item__text__info__right">Open to collaboration</div>
                     </div>
                 </div>
             </div>
+
+            <!-- PROFILO 3 -->
             <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-4.jpg">
-                    <img src="img/listing/list_icon-4.png" alt="">
-                    <div class="listing__item__pic__tag">Popular</div>
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/luca-verdi.jpg">
+                    <div class="listing__item__pic__tag">HR</div>
                     <div class="listing__item__pic__btns">
                         <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                        <a href="#"><span class="icon_heart_alt"></span></a>
                     </div>
                 </div>
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
-                        <h5>Crab fried with tamarind</h5>
-                        <div class="listing__item__text__rating">
-                            <div class="listing__item__rating__star">
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star-half_alt"></span>
-                            </div>
-                            <h6>$40 - $70</h6>
-                        </div>
+                        <h5>Luca Verdi</h5>
+                        <span class="listing__item__tag">
+                            HR Business Partner · Remote · HR & People
+                        </span>
                         <ul>
-                            <li><span class="icon_pin_alt"></span> 14320 Keenes Mill Rd. Cottondale, Alabama(AL), United
-                                States</li>
-                            <li><span class="icon_phone"></span> (+12) 345-678-910</li>
+                            <li><strong>Skills:</strong> People management, coaching, change management</li>
+                            <li><strong>Interests:</strong> Community, wellbeing, diversity & inclusion</li>
+                            <li><strong>Contact:</strong> luca.verdi@azienda.it</li>
                         </ul>
                     </div>
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
                             <img src="img/listing/list_small_icon-3.png" alt="">
-                            <span>Hotel</span>
+                            <span>HR & People</span>
                         </div>
-                        <div class="listing__item__text__info__right closed">Closed</div>
+                        <div class="listing__item__text__info__right">Open to mentoring</div>
                     </div>
                 </div>
             </div>
+
+            <!-- PROFILO 4 -->
             <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-3.jpg">
-                    <img src="img/listing/list_icon-3.png" alt="">
-                    <div class="listing__item__pic__tag">Popular</div>
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/sara-neri.jpg">
+                    <div class="listing__item__pic__tag">Marketing</div>
                     <div class="listing__item__pic__btns">
                         <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                        <a href="#"><span class="icon_heart_alt"></span></a>
                     </div>
                 </div>
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
-                        <h5>Sweet and sour pork ribs</h5>
-                        <div class="listing__item__text__rating">
-                            <div class="listing__item__rating__star">
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star-half_alt"></span>
-                            </div>
-                            <h6>$40 - $70</h6>
-                        </div>
+                        <h5>Sara Neri</h5>
+                        <span class="listing__item__tag">
+                            Marketing Lead · Torino · Brand & Communication
+                        </span>
                         <ul>
-                            <li><span class="icon_pin_alt"></span> 251 Wiley St. Forks, Washington(WA), United States
-                            </li>
-                            <li><span class="icon_phone"></span> (+12) 345-678-910</li>
-                        </ul>
-                    </div>
-                    <div class="listing__item__text__info">
-                        <div class="listing__item__text__info__left">
-                            <img src="img/listing/list_small_icon-1.png" alt="">
-                            <span>Restaurant</span>
-                        </div>
-                        <div class="listing__item__text__info__right">Open Now</div>
-                    </div>
-                </div>
-            </div>
-            <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-5.jpg">
-                    <img src="img/listing/list_icon-5.png" alt="">
-                    <div class="listing__item__pic__tag hot_deal">Hot Deal</div>
-                    <div class="listing__item__pic__btns">
-                        <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                        <a href="#"><span class="icon_heart_alt"></span></a>
-                    </div>
-                </div>
-                <div class="listing__item__text">
-                    <div class="listing__item__text__inside">
-                        <h5>Tortoise grilled on salt</h5>
-                        <div class="listing__item__text__rating">
-                            <div class="listing__item__rating__star">
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star-half_alt"></span>
-                            </div>
-                            <h6>$40 - $70</h6>
-                        </div>
-                        <ul>
-                            <li><span class="icon_pin_alt"></span> 236 Littleton St. New Philadelphia, Ohio, United
-                                States</li>
-                            <li><span class="icon_phone"></span> (+12) 345-678-910</li>
+                            <li><strong>Skills:</strong> Campaign planning, content strategy, analytics</li>
+                            <li><strong>Interests:</strong> Storytelling, branding, internal comms</li>
+                            <li><strong>Contact:</strong> sara.neri@azienda.it</li>
                         </ul>
                     </div>
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
                             <img src="img/listing/list_small_icon-4.png" alt="">
-                            <span>Shopping</span>
+                            <span>Marketing & Comms</span>
                         </div>
-                        <div class="listing__item__text__info__right">Open Now</div>
+                        <div class="listing__item__text__info__right">Open to projects</div>
                     </div>
                 </div>
             </div>
+
+            <!-- PROFILO 5 -->
             <div class="listing__item">
-                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-6.jpg">
-                    <img src="img/listing/list_icon-6.png" alt="">
-                    <div class="listing__item__pic__tag">Popular</div>
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/alessandro-russo.jpg">
+                    <div class="listing__item__pic__tag">Tech</div>
                     <div class="listing__item__pic__btns">
                         <a href="#"><span class="icon_zoom-in_alt"></span></a>
-                        <a href="#"><span class="icon_heart_alt"></span></a>
                     </div>
                 </div>
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
-                        <h5>Fish cooked with fishsauce</h5>
-                        <div class="listing__item__text__rating">
-                            <div class="listing__item__rating__star">
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star-half_alt"></span>
-                            </div>
-                            <h6>$40 - $70</h6>
-                        </div>
+                        <h5>Alessandro Russo</h5>
+                        <span class="listing__item__tag">
+                            Software Engineer · Milano · Tech Team
+                        </span>
                         <ul>
-                            <li><span class="icon_pin_alt"></span> 2604 E Drachman St. Tucson, Arizona, United States
-                            </li>
-                            <li><span class="icon_phone"></span> (+12) 345-678-910</li>
+                            <li><strong>Skills:</strong> Backend development, APIs, DevOps</li>
+                            <li><strong>Interests:</strong> Automation, open source, developer experience</li>
+                            <li><strong>Contact:</strong> alessandro.russo@azienda.it</li>
                         </ul>
                     </div>
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
                             <img src="img/listing/list_small_icon-3.png" alt="">
-                            <span>Hotel</span>
+                            <span>Tech & Engineering</span>
                         </div>
-                        <div class="listing__item__text__info__right">Open Now</div>
+                        <div class="listing__item__text__info__right">Open to pair programming</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFILO 6 -->
+            <div class="listing__item">
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/elena-moretti.jpg">
+                    <div class="listing__item__pic__tag">Operations</div>
+                    <div class="listing__item__pic__btns">
+                        <a href="#"><span class="icon_zoom-in_alt"></span></a>
+                    </div>
+                </div>
+                <div class="listing__item__text">
+                    <div class="listing__item__text__inside">
+                        <h5>Elena Moretti</h5>
+                        <span class="listing__item__tag">
+                            Operations Manager · Bologna · Operations
+                        </span>
+                        <ul>
+                            <li><strong>Skills:</strong> Process design, stakeholder management, planning</li>
+                            <li><strong>Interests:</strong> Continuous improvement, service excellence</li>
+                            <li><strong>Contact:</strong> elena.moretti@azienda.it</li>
+                        </ul>
+                    </div>
+                    <div class="listing__item__text__info">
+                        <div class="listing__item__text__info__left">
+                            <img src="img/listing/list_small_icon-5.png" alt="">
+                            <span>Business & Operations</span>
+                        </div>
+                        <div class="listing__item__text__info__right">Open to sharing best practices</div>
                     </div>
                 </div>
             </div>
@@ -400,10 +369,11 @@
     </section>
     <!-- Listing Section End -->
 
-    <!-- Map Begin -->
+    <!-- Map Begin (puoi cambiarla in mappa sedi aziendali in futuro) -->
     <div class="listing__map">
         <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d-118.69192431097179!3d34.020730495817475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1586670019340!5m2!1sen!2sbd" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.43556031643!2d-118.69192431097179!3d34.020730495817475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1586670019340!5m2!1sen!2sbd"
+            style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
     </div>
     <!-- Map End -->
 
