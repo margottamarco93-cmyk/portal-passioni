@@ -28,12 +28,10 @@
     <!-- Netlify Identity -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
+    <!-- FIX LOGIN + PRELOADER -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (!window.netlifyIdentity) {
-                window.location.href = "index.html";
-                return;
-            }
+        window.addEventListener("load", function () {
+            if (!window.netlifyIdentity) return;
 
             netlifyIdentity.on("init", function (user) {
                 if (!user) {
@@ -53,8 +51,7 @@
         }
     </script>
 
-
-    <!-- FIX LAYOUT – niente colonna a destra -->
+    <!-- FIX LAYOUT – rimuove terza colonna e sistema la pagina -->
     <style>
         .filter {
             float: left;
@@ -103,3 +100,247 @@
                             <ul>
                                 <li><a href="./home.html">Home</a></li>
                                 <li class="active"><a href="./listing.html">Persone</a></li>
+                                <li><a href="./add-profile.html">Aggiungi profilo</a></li>
+                            </ul>
+                        </nav>
+
+                        <div class="header__menu__right">
+                            <a href="#" class="primary-btn" onclick="logout()">
+                                <i class="fa fa-sign-out"></i> Logout
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- Fine Header -->
+
+
+    <!-- FILTRI A SINISTRA -->
+    <div class="filter nice-scroll">
+
+        <div class="filter__title">
+            <h5><i class="fa fa-filter"></i> Filtra persone</h5>
+        </div>
+
+        <!-- Nome -->
+        <div class="filter__search">
+            <input type="text" placeholder="Nome o parola chiave">
+        </div>
+
+        <!-- Skill: multiselect -->
+        <div class="filter__select">
+            <label class="filter__label">Skill (selezione multipla)</label>
+            <select multiple>
+                <option value="product">Product management</option>
+                <option value="ux">UX / UI design</option>
+                <option value="marketing">Marketing & comunicazione</option>
+                <option value="development">Sviluppo software</option>
+                <option value="hr">HR & people</option>
+                <option value="operations">Operations</option>
+            </select>
+        </div>
+
+        <!-- Ruolo -->
+        <div class="filter__select">
+            <label class="filter__label">Ruolo</label>
+            <select>
+                <option value="">Tutti i ruoli</option>
+                <option value="junior">Junior</option>
+                <option value="middle">Middle</option>
+                <option value="senior">Senior</option>
+                <option value="lead">Lead / Manager</option>
+            </select>
+        </div>
+
+        <!-- Anni in azienda -->
+        <div class="filter__radius">
+            <label class="filter__label">Anni in azienda</label>
+            <select>
+                <option value="">Tutti</option>
+                <option value="0-1">0 - 1 anno</option>
+                <option value="2-5">2 - 5 anni</option>
+                <option value="6-10">6 - 10 anni</option>
+                <option value="10+">Più di 10 anni</option>
+            </select>
+        </div>
+
+        <!-- Bottoni -->
+        <div class="filter__btns">
+            <button type="submit">FILTRA RISULTATI</button>
+            <button type="reset" class="filter__reset">RESETTA FILTRI</button>
+        </div>
+
+    </div>
+    <!-- FINE FILTRI -->
+
+
+    <!-- LISTA PROFILI -->
+    <section class="listing nice-scroll">
+
+        <div class="listing__text__top">
+            <div class="listing__text__top__left">
+                <h5>Persone</h5>
+                <span>6 profili trovati</span>
+            </div>
+            <div class="listing__text__top__right">Ordina per team <i class="fa fa-sort-amount-asc"></i></div>
+        </div>
+
+        <div class="listing__list">
+
+
+            <!-- PROFILO 1 -->
+            <div class="listing__item">
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/marco-rossi.jpg">
+                    <div class="listing__item__pic__tag">Product</div>
+                </div>
+
+                <div class="listing__item__text">
+                    <div class="listing__item__text__inside">
+                        <h5>Marco Rossi</h5>
+
+                        <span class="listing__item__tag">
+                            Digital Product Manager · Milano · Digital Team
+                        </span>
+
+                        <ul>
+                            <li><strong>Competenze:</strong> Product management, UX, Agile</li>
+                            <li><strong>Interessi:</strong> Innovazione, formazione, community</li>
+                            <li><strong>Contatto:</strong> marco.rossi@azienda.it</li>
+                        </ul>
+                    </div>
+
+                    <div class="listing__item__text__info">
+                        <div class="listing__item__text__info__left"><span>Product & Innovation</span></div>
+                        <div class="listing__item__text__info__right">Disponibile a collaborare</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- PROFILO 2 -->
+            <div class="listing__item">
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/giulia-bianchi.jpg">
+                    <div class="listing__item__pic__tag" style="background:#29a6ff">Design</div>
+                </div>
+
+                <div class="listing__item__text">
+                    <div class="listing__item__text__inside">
+
+                        <h5>Giulia Bianchi</h5>
+
+                        <span class="listing__item__tag">
+                            UX Designer · Roma · Experience Team
+                        </span>
+
+                        <ul>
+                            <li><strong>Competenze:</strong> UX research, prototipazione, usability test</li>
+                            <li><strong>Interessi:</strong> Accessibilità, service design</li>
+                            <li><strong>Contatto:</strong> giulia.bianchi@azienda.it</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="listing__item__text__info">
+                        <div class="listing__item__text__info__left"><span>Design & Experience</span></div>
+                        <div class="listing__item__text__info__right">Disponibile a collaborare</div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- PROFILO 3 -->
+            <div class="listing__item">
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/luca-verdi.jpg">
+                    <div class="listing__item__pic__tag">HR</div>
+                </div>
+
+                <div class="listing__item__text">
+                    <div class="listing__item__text__inside">
+
+                        <h5>Luca Verdi</h5>
+
+                        <span class="listing__item__tag">
+                            HR Business Partner · Remote · HR & People
+                        </span>
+
+                        <ul>
+                            <li><strong>Competenze:</strong> People management, coaching</li>
+                            <li><strong>Interessi:</strong> Wellbeing, diversity & inclusion</li>
+                            <li><strong>Contatto:</strong> luca.verdi@azienda.it</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="listing__item__text__info">
+                        <div class="listing__item__text__info__left"><span>HR & People</span></div>
+                        <div class="listing__item__text__info__right">Disponibile per mentoring</div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- PROFILO 4 -->
+            <div class="listing__item">
+                <div class="listing__item__pic set-bg" data-setbg="img/profiles/sara-neri.jpg">
+                    <div class="listing__item__pic__tag">Marketing</div>
+                </div>
+
+                <div class="listing__item__text">
+                    <div class="listing__item__text__inside">
+
+                        <h5>Sara Neri</h5>
+
+                        <span class="listing__item__tag">
+                            Marketing Lead · Torino · Brand & Communication
+                        </span>
+
+                        <ul>
+                            <li><strong>Competenze:</strong> Strategia, contenuti, analytics</li>
+                            <li><strong>Interessi:</strong> Storytelling, comms interne</li>
+                            <li><strong>Contatto:</strong> sara.neri@azienda.it</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="listing__item__text__info">
+                        <div class="listing__item__text__info__left"><span>Marketing & Communication</span></div>
+                        <div class="listing__item__text__info__right">Disponibile a collaborare</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- FINE LISTA -->
+
+
+    <!-- Footer -->
+    <div class="footer__bottom">
+        <p style="text-align:center; padding:20px;">© La Comunità</p>
+    </div>
+
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
+
