@@ -28,7 +28,7 @@
     <!-- Netlify Identity -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
-    <!-- LOGIN CHECK (dopo caricamento pagina, niente loop/preloader) -->
+    <!-- LOGIN CHECK (post-load, niente loop/preloader) -->
     <script>
         window.addEventListener("load", function () {
             if (!window.netlifyIdentity) return;
@@ -47,11 +47,13 @@
         });
 
         function logout() {
-            if (window.netlifyIdentity) netlifyIdentity.logout();
+            if (window.netlifyIdentity) {
+                netlifyIdentity.logout();
+            }
         }
     </script>
 
-    <!-- LAYOUT FIX: wrapper flex per filtri + lista, nessuna colonna destra -->
+    <!-- LAYOUT: filtri + lista, 3 card per riga -->
     <style>
         .listing-layout {
             display: flex;
@@ -62,29 +64,77 @@
             flex: 0 0 320px;
             max-width: 320px;
             float: none !important;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
         }
 
         .listing {
             flex: 1 1 auto;
             width: auto;
             float: none !important;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            padding-right: 24px;
         }
 
         .listing__map {
             display: none !important;
         }
 
-        @media (max-width: 991px) {
+        .listing__list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .listing__item {
+            width: calc(33.333% - 16px);
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 1199px) {
+            .listing__item {
+                width: calc(50% - 16px);
+            }
+        }
+
+        @media (max-width: 767px) {
             .listing-layout {
                 flex-direction: column;
             }
 
             .filter,
             .listing {
-                flex: 0 0 auto;
-                max-width: 100%;
+                max-height: none;
                 width: 100%;
             }
+
+            .listing__item {
+                width: 100%;
+            }
+        }
+
+        .listing__pagination {
+            margin: 24px 0 16px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .listing__pagination a {
+            display: inline-block;
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .listing__pagination a.active {
+            background: #ff3366;
+            border-color: #ff3366;
+            color: #fff;
         }
     </style>
 
@@ -93,7 +143,9 @@
 <body class="ov-hid">
 
     <!-- Preloader -->
-    <div id="preloder"><div class="loader"></div></div>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
     <!-- Header -->
     <header class="header header--normal">
@@ -102,7 +154,8 @@
 
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./home.html"><img src="img/footer-logo.png" alt=""></a>
+                        <!-- LOGO -> home.html -->
+                        <a href="./home.html"><img src="img/footer-logo.png" alt="La Comunità"></a>
                     </div>
                 </div>
 
@@ -134,7 +187,7 @@
     <!-- Fine Header -->
 
 
-    <!-- WRAPPER FLEX: FILTRI + LISTA -->
+    <!-- WRAPPER: FILTRI + LISTA -->
     <div class="listing-layout">
 
         <!-- FILTRI A SINISTRA -->
@@ -202,13 +255,12 @@
             <div class="listing__text__top">
                 <div class="listing__text__top__left">
                     <h5>Persone</h5>
-                    <span>6 profili trovati</span>
+                    <span>12 profili trovati</span>
                 </div>
                 <div class="listing__text__top__right">Ordina per team <i class="fa fa-sort-amount-asc"></i></div>
             </div>
 
             <div class="listing__list">
-
 
                 <!-- PROFILO 1 -->
                 <div class="listing__item">
@@ -219,25 +271,21 @@
                     <div class="listing__item__text">
                         <div class="listing__item__text__inside">
                             <h5>Marco Rossi</h5>
-
                             <span class="listing__item__tag">
                                 Digital Product Manager · Milano · Digital Team
                             </span>
-
                             <ul>
                                 <li><strong>Competenze:</strong> Product management, UX, Agile</li>
                                 <li><strong>Interessi:</strong> Innovazione, formazione, community</li>
                                 <li><strong>Contatto:</strong> marco.rossi@azienda.it</li>
                             </ul>
                         </div>
-
                         <div class="listing__item__text__info">
                             <div class="listing__item__text__info__left"><span>Product & Innovation</span></div>
                             <div class="listing__item__text__info__right">Disponibile a collaborare</div>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- PROFILO 2 -->
                 <div class="listing__item">
@@ -247,29 +295,22 @@
 
                     <div class="listing__item__text">
                         <div class="listing__item__text__inside">
-
                             <h5>Giulia Bianchi</h5>
-
                             <span class="listing__item__tag">
                                 UX Designer · Roma · Experience Team
                             </span>
-
                             <ul>
                                 <li><strong>Competenze:</strong> UX research, prototipazione, usability test</li>
                                 <li><strong>Interessi:</strong> Accessibilità, service design</li>
                                 <li><strong>Contatto:</strong> giulia.bianchi@azienda.it</li>
                             </ul>
-
                         </div>
-
                         <div class="listing__item__text__info">
                             <div class="listing__item__text__info__left"><span>Design & Experience</span></div>
                             <div class="listing__item__text__info__right">Disponibile a collaborare</div>
                         </div>
-
                     </div>
                 </div>
-
 
                 <!-- PROFILO 3 -->
                 <div class="listing__item">
@@ -279,29 +320,22 @@
 
                     <div class="listing__item__text">
                         <div class="listing__item__text__inside">
-
                             <h5>Luca Verdi</h5>
-
                             <span class="listing__item__tag">
                                 HR Business Partner · Remote · HR & People
                             </span>
-
                             <ul>
                                 <li><strong>Competenze:</strong> People management, coaching</li>
                                 <li><strong>Interessi:</strong> Wellbeing, diversity & inclusion</li>
                                 <li><strong>Contatto:</strong> luca.verdi@azienda.it</li>
                             </ul>
-
                         </div>
-
                         <div class="listing__item__text__info">
                             <div class="listing__item__text__info__left"><span>HR & People</span></div>
                             <div class="listing__item__text__info__right">Disponibile per mentoring</div>
                         </div>
-
                     </div>
                 </div>
-
 
                 <!-- PROFILO 4 -->
                 <div class="listing__item">
@@ -311,21 +345,16 @@
 
                     <div class="listing__item__text">
                         <div class="listing__item__text__inside">
-
                             <h5>Sara Neri</h5>
-
                             <span class="listing__item__tag">
                                 Marketing Lead · Torino · Brand & Communication
                             </span>
-
                             <ul>
                                 <li><strong>Competenze:</strong> Strategia, contenuti, analytics</li>
                                 <li><strong>Interessi:</strong> Storytelling, comms interne</li>
                                 <li><strong>Contatto:</strong> sara.neri@azienda.it</li>
                             </ul>
-
                         </div>
-
                         <div class="listing__item__text__info">
                             <div class="listing__item__text__info__left"><span>Marketing & Communication</span></div>
                             <div class="listing__item__text__info__right">Disponibile a collaborare</div>
@@ -333,13 +362,199 @@
                     </div>
                 </div>
 
+                <!-- PROFILI 5–12: placeholder che puoi riempire -->
+                <!-- DUPLICA QUESTI BLOCCHI CAMBIANDO NOMI/DATI -->
+
+                <!-- PROFILO 5 -->
+                <div class="listing__item">
+                    <div class="listing__item__pic set-bg" data-setbg="img/profiles/profilo-5.jpg">
+                        <div class="listing__item__pic__tag">Tech</div>
+                    </div>
+                    <div class="listing__item__text">
+                        <div class="listing__item__text__inside">
+                            <h5>Nome Cognome 5</h5>
+                            <span class="listing__item__tag">Ruolo · Città · Team</span>
+                            <ul>
+                                <li><strong>Competenze:</strong> ...</li>
+                                <li><strong>Interessi:</strong> ...</li>
+                                <li><strong>Contatto:</strong> nome5@azienda.it</li>
+                            </ul>
+                        </div>
+                        <div class="listing__item__text__info">
+                            <div class="listing__item__text__info__left"><span>Team</span></div>
+                            <div class="listing__item__text__info__right">Disponibile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILO 6 -->
+                <div class="listing__item">
+                    <div class="listing__item__pic set-bg" data-setbg="img/profiles/profilo-6.jpg">
+                        <div class="listing__item__pic__tag">Ops</div>
+                    </div>
+                    <div class="listing__item__text">
+                        <div class="listing__item__text__inside">
+                            <h5>Nome Cognome 6</h5>
+                            <span class="listing__item__tag">Ruolo · Città · Team</span>
+                            <ul>
+                                <li><strong>Competenze:</strong> ...</li>
+                                <li><strong>Interessi:</strong> ...</li>
+                                <li><strong>Contatto:</strong> nome6@azienda.it</li>
+                            </ul>
+                        </div>
+                        <div class="listing__item__text__info">
+                            <div class="listing__item__text__info__left"><span>Team</span></div>
+                            <div class="listing__item__text__info__right">Disponibile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILO 7 -->
+                <div class="listing__item">
+                    <div class="listing__item__pic set-bg" data-setbg="img/profiles/profilo-7.jpg">
+                        <div class="listing__item__pic__tag">Altro</div>
+                    </div>
+                    <div class="listing__item__text">
+                        <div class="listing__item__text__inside">
+                            <h5>Nome Cognome 7</h5>
+                            <span class="listing__item__tag">Ruolo · Città · Team</span>
+                            <ul>
+                                <li><strong>Competenze:</strong> ...</li>
+                                <li><strong>Interessi:</strong> ...</li>
+                                <li><strong>Contatto:</strong> nome7@azienda.it</li>
+                            </ul>
+                        </div>
+                        <div class="listing__item__text__info">
+                            <div class="listing__item__text__info__left"><span>Team</span></div>
+                            <div class="listing__item__text__info__right">Disponibile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILO 8 -->
+                <div class="listing__item">
+                    <div class="listing__item__pic set-bg" data-setbg="img/profiles/profilo-8.jpg">
+                        <div class="listing__item__pic__tag">Altro</div>
+                    </div>
+                    <div class="listing__item__text">
+                        <div class="listing__item__text__inside">
+                            <h5>Nome Cognome 8</h5>
+                            <span class="listing__item__tag">Ruolo · Città · Team</span>
+                            <ul>
+                                <li><strong>Competenze:</strong> ...</li>
+                                <li><strong>Interessi:</strong> ...</li>
+                                <li><strong>Contatto:</strong> nome8@azienda.it</li>
+                            </ul>
+                        </div>
+                        <div class="listing__item__text__info">
+                            <div class="listing__item__text__info__left"><span>Team</span></div>
+                            <div class="listing__item__text__info__right">Disponibile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILO 9 -->
+                <div class="listing__item">
+                    <div class="listing__item__pic set-bg" data-setbg="img/profiles/profilo-9.jpg">
+                        <div class="listing__item__pic__tag">Altro</div>
+                    </div>
+                    <div class="listing__item__text">
+                        <div class="listing__item__text__inside">
+                            <h5>Nome Cognome 9</h5>
+                            <span class="listing__item__tag">Ruolo · Città · Team</span>
+                            <ul>
+                                <li><strong>Competenze:</strong> ...</li>
+                                <li><strong>Interessi:</strong> ...</li>
+                                <li><strong>Contatto:</strong> nome9@azienda.it</li>
+                            </ul>
+                        </div>
+                        <div class="listing__item__text__info">
+                            <div class="listing__item__text__info__left"><span>Team</span></div>
+                            <div class="listing__item__text__info__right">Disponibile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILO 10 -->
+                <div class="listing__item">
+                    <div class="listing__item__pic set-bg" data-setbg="img/profiles/profilo-10.jpg">
+                        <div class="listing__item__pic__tag">Altro</div>
+                    </div>
+                    <div class="listing__item__text">
+                        <div class="listing__item__text__inside">
+                            <h5>Nome Cognome 10</h5>
+                            <span class="listing__item__tag">Ruolo · Città · Team</span>
+                            <ul>
+                                <li><strong>Competenze:</strong> ...</li>
+                                <li><strong>Interessi:</strong> ...</li>
+                                <li><strong>Contatto:</strong> nome10@azienda.it</li>
+                            </ul>
+                        </div>
+                        <div class="listing__item__text__info">
+                            <div class="listing__item__text__info__left"><span>Team</span></div>
+                            <div class="listing__item__text__info__right">Disponibile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILO 11 -->
+                <div class="listing__item">
+                    <div class="listing__item__pic set-bg" data-setbg="img/profiles/profilo-11.jpg">
+                        <div class="listing__item__pic__tag">Altro</div>
+                    </div>
+                    <div class="listing__item__text">
+                        <div class="listing__item__text__inside">
+                            <h5>Nome Cognome 11</h5>
+                            <span class="listing__item__tag">Ruolo · Città · Team</span>
+                            <ul>
+                                <li><strong>Competenze:</strong> ...</li>
+                                <li><strong>Interessi:</strong> ...</li>
+                                <li><strong>Contatto:</strong> nome11@azienda.it</li>
+                            </ul>
+                        </div>
+                        <div class="listing__item__text__info">
+                            <div class="listing__item__text__info__left"><span>Team</span></div>
+                            <div class="listing__item__text__info__right">Disponibile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILO 12 -->
+                <div class="listing__item">
+                    <div class="listing__item__pic set-bg" data-setbg="img/profiles/profilo-12.jpg">
+                        <div class="listing__item__pic__tag">Altro</div>
+                    </div>
+                    <div class="listing__item__text">
+                        <div class="listing__item__text__inside">
+                            <h5>Nome Cognome 12</h5>
+                            <span class="listing__item__tag">Ruolo · Città · Team</span>
+                            <ul>
+                                <li><strong>Competenze:</strong> ...</li>
+                                <li><strong>Interessi:</strong> ...</li>
+                                <li><strong>Contatto:</strong> nome12@azienda.it</li>
+                            </ul>
+                        </div>
+                        <div class="listing__item__text__info">
+                            <div class="listing__item__text__info__left"><span>Team</span></div>
+                            <div class="listing__item__text__info__right">Disponibile</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Paginazione (solo UI, logica JS la puoi aggiungere dopo) -->
+            <div class="listing__pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
             </div>
 
         </section>
         <!-- FINE LISTA -->
 
     </div>
-    <!-- FINE WRAPPER FLEX -->
+    <!-- FINE WRAPPER -->
 
 
     <!-- Footer -->
