@@ -1,39 +1,65 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <title>La Comunità | Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="card-body">
+  <h3 class="mb-1 text-center">La Comunità</h3>
+  <p class="mb-4 text-center text-muted">Accesso riservato ai dipendenti.</p>
 
-  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-  <link rel="stylesheet" href="css/style.css" type="text/css">
-</head>
-<body class="login-page">
-  <div class="container" style="max-width: 420px; margin-top: 80px;">
-    <div class="card">
-      <div class="card-body text-center">
-        <h3 class="mb-4">La Comunità</h3>
-        <p class="mb-4">Accesso riservato ai dipendenti.</p>
+  <!-- Tabs -->
+  <ul class="nav nav-pills nav-justified mb-3" id="authTabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="#" data-tab="login">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-tab="register">Registrati</a>
+    </li>
+  </ul>
 
-        <button class="btn btn-primary btn-block mb-3" onclick="openLoginModal()">
-          Login
-        </button>
-
-        <button class="btn btn-outline-secondary btn-block" onclick="openRegistrationModal()">
-          Registrati (dipendenti)
-        </button>
-
-        <p class="small text-muted mt-3">
-          Per registrarti devi conoscere il codice aziendale.
-        </p>
-      </div>
+  <!-- LOGIN FORM -->
+  <form id="login-form">
+    <div class="form-group text-left">
+      <label for="login-email">Email aziendale</label>
+      <input type="email" class="form-control" id="login-email" placeholder="nome.cognome@azienda.it" required>
     </div>
-  </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <div class="form-group text-left">
+      <label for="login-password">Password</label>
+      <input type="password" class="form-control" id="login-password" placeholder="Password" required>
+    </div>
 
-  <script src="js/auth.js"></script>
-</body>
-</html>
+    <button type="submit" class="btn btn-primary btn-block mt-3">
+      Entra
+    </button>
+
+    <p class="small text-muted mt-3 mb-0 text-center" id="login-message"></p>
+  </form>
+
+  <!-- REGISTER FORM -->
+  <form id="register-form" class="d-none">
+    <div class="form-group text-left">
+      <label for="reg-email">Email</label>
+      <input type="email" class="form-control" id="reg-email" placeholder="nome.cognome@azienda.it" required>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="reg-password">Password</label>
+      <input type="password" class="form-control" id="reg-password" placeholder="Minimo 6 caratteri" required>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="reg-password2">Conferma password</label>
+      <input type="password" class="form-control" id="reg-password2" placeholder="Ripeti password" required>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="reg-company-code">Codice aziendale</label>
+      <input type="text" class="form-control" id="reg-company-code" placeholder="Es. ABC123" required>
+      <small class="form-text text-muted">
+        Per registrarti devi conoscere il codice aziendale.
+      </small>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block mt-3">
+      Crea account
+    </button>
+
+    <p class="small text-muted mt-3 mb-0 text-center" id="register-message"></p>
+  </form>
+</div>
