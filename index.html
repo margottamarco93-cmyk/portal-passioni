@@ -1,82 +1,40 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>La Comunità | Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>La Comunità | Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
 
-  <!-- Netlify Identity -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-  <script>
-    const COMPANY_REGISTRATION_CODE = "LACOMUNITA2025"; // cambia questo
-
-    document.addEventListener("DOMContentLoaded", function () {
-      if (window.netlifyIdentity) {
-        netlifyIdentity.on("init", function(user) {
-          // se è già loggato e arriva su / → portalo direttamente dentro
-          if (user) {
-            window.location.href = "home.html";
-          }
-        });
-
-        netlifyIdentity.on("login", function(user) {
-          // dopo login → entra nel sito
-          window.location.href = "home.html";
-        });
-
-        netlifyIdentity.on("logout", function() {
-          // dopo logout resta sulla pagina di login
-          window.location.href = "index.html";
-        });
-
-        netlifyIdentity.init();
-      }
-    });
-
-    function openLogin() {
-      if (window.netlifyIdentity) {
-        netlifyIdentity.open("login");
-      }
-    }
-
-    function openRegistrationStep() {
-      const code = prompt("Inserisci il codice aziendale per registrarti:");
-      if (code === null) return;
-
-      if (code === COMPANY_REGISTRATION_CODE) {
-        if (window.netlifyIdentity) {
-          netlifyIdentity.open("signup");
-        }
-      } else {
-        alert("Codice aziendale non corretto. Non puoi registrarti.");
-      }
-    }
-  </script>
-</head>
+  </head>
 <body class="login-page">
-  <div class="container" style="max-width: 420px; margin-top: 80px;">
-    <div class="card">
-      <div class="card-body text-center">
-        <h3 class="mb-4">La Comunità</h3>
-        <p class="mb-4">Accesso riservato ai dipendenti.</p>
+  <div class="container" style="max-width: 420px; margin-top: 80px;">
+    <div class="card">
+      <div class="card-body text-center">
+        <h3 class="mb-4">La Comunità</h3>
+        <p class="mb-4">Accesso riservato ai dipendenti.</p>
 
-        <button class="btn btn-primary btn-block mb-3" onclick="openLogin()">
-          Login
-        </button>
+                <button class="btn btn-primary btn-block mb-3" onclick="openLoginModal()">
+          Login
+        </button>
 
-        <button class="btn btn-outline-secondary btn-block" onclick="openRegistrationStep()">
-          Registrati (dipendenti)
-        </button>
+        <button class="btn btn-outline-secondary btn-block" onclick="openRegistrationModal()">
+          Registrati (dipendenti)
+        </button>
 
-        <p class="small text-muted mt-3">
-          Per registrarti devi conoscere il codice aziendale.
-        </p>
-      </div>
-    </div>
-  </div>
+        <p class="small text-muted mt-3">
+          Per registrarti devi conoscere il codice aziendale.
+        </p>
+      </div>
+    </div>
+  </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script src="js/auth.js"></script>
 </body>
 </html>
