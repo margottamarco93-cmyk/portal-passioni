@@ -1,6 +1,6 @@
 // js/auth.js
 
-// 1. Config Firebase (quella che mi hai passato)
+// 1. Config Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDWisOm9z0LrSV0BczsKD5qYuVfswwT7jw",
   authDomain: "progetto-cooperativa-passioni.firebaseapp.com",
@@ -11,76 +11,93 @@ const firebaseConfig = {
   appId: "1:578783174328:web:9770c86aa93d7fa3055e4d"
 };
 
-// 2. Inizializza Firebase (compat)
 firebase.initializeApp(firebaseConfig);
-
 const auth = firebase.auth();
 const db   = firebase.firestore();
 
-// Codice aziendale richiesto per registrarsi
-const COMPANY_CODE = "ABC123"; // <-- CAMBIALO TU
+// CAMBIA QUESTO con il vostro codice reale
+const COMPANY_CODE = "ABC123";
 
-// 3. Se l'utente è già loggato, lo mando direttamente su home.html
+// Se già loggato, vai alla dashboard
 auth.onAuthStateChanged((user) => {
   if (user) {
-    // Già autenticato → vai in dashboard
     window.location.href = "home.html";
   }
 });
 
-// 4. Funzione chiamata dal bottone "Login"
-function openLoginModal() {
-  const email = prompt("Email aziendale:");
-  if (!email) return;
+// ------ LOGIN FORM ------
+const loginForm = document.getElementById("login-form");
+const loginMsg  = document.getElementById("login-message");
 
-  const password = prompt("Password:");
-  if (!password) return;
+if (loginForm) {
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    loginMsg.textContent = "";
 
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      // Se ok, onAuthStateChanged farà il redirect
-    })
-    .catch((error) => {
-      console.error(error);
-      alert("Errore nel login: " + error.message);
-    });
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+
+    if (!email || !password) {
+      loginMsg.textContent = "Compila tutti i campi.";
+      return;
+    }
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        loginMsg.textContent = "Accesso effettuato, ti reindirizzo...";
+        window.location.href = "home.html";
+      })
+      .catch((err) => {
+        console.error(err);
+        loginMsg.textContent = "Errore login: " + err.message;
+      });
+  });
 }
 
-// 5. Funzione chiamata dal bottone "Registrati"
-function openRegistrationModal() {
-  const email = prompt("Email aziendale:");
-  if (!email) return;
+// ------ REGISTER FORM ------
+const regForm = document.getElementById("register-form");
+const regMsg  = document.getElementById("register-message");
 
-  const password = prompt("Crea una password (min 6 caratteri):");
-  if (!password) return;
+if (regForm) {
+  regForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    regMsg.textContent = "";
 
-  const code = prompt("Inserisci il codice aziendale:");
-  if (!code) return;
+    const email     = document.getElementById("reg-email").value.trim();
+    const pass1     = document.getElementById("reg-password").value;
+    const pass2     = document.getElementById("reg-password2").value;
+    const codeInput = document.getElementById("reg-company-code").value.trim();
 
-  if (code !== COMPANY_CODE) {
-    alert("Codice aziendale non valido.");
-    return;
-  }
+    if (!email || !pass1 || !pass2 || !codeInput) {
+      regMsg.textContent = "Compila tutti i campi.";
+      return;
+    }
 
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(async (cred) => {
+    if (pass1 !== pass2) {
+      regMsg.textContent = "Le password non coincidono.";
+      return;
+    }
+
+    if (codeInput !== COMPANY_CODE) {
+      regMsg.textContent = "Codice aziendale non valido.";
+      return;
+    }
+
+    try {
+      const cred = await auth.createUserWithEmailAndPassword(email, pass1);
       const user = cred.user;
 
-      // Qui puoi salvare info base sul profilo (anche vuote)
+      // profilo base su Firestore
       await db.collection("profiles").doc(user.uid).set({
         email: user.email,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
 
-      alert("Registrazione completata. Ora verrai reindirizzato alla dashboard.");
-      // onAuthStateChanged farà il redirect
-    })
-    .catch((error) => {
-      console.error(error);
-      alert("Errore nella registrazione: " + error.message);
-    });
+      regMsg.textContent = "Registrazione completata. Reindirizzamento...";
+      window.location.href = "home.html";
+    } catch (err) {
+      console.error(err);
+      regMsg.textContent = "Errore registrazione: " + err.message;
+    }
+  });
 }
-
-// 6. Espongo le funzioni globalmente per gli onclick in index.html
-window.openLoginModal = openLoginModal;
-window.openRegistrationModal = openRegistrationModal;
